@@ -32,7 +32,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>Mantenimiento</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="categoria"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('categorias.index') }}"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span >Categoria</span>
                     </a>                
                 </li> 
