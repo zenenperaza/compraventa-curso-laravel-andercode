@@ -1,0 +1,25 @@
+/* Estilos personalizados para el menú de selección de columnas */
+.dt-button-collection .dt-button {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    display: block;
+    text-align: left;
+}
+
+/* Cuando una columna está activa (visible) */
+.dt-button-collection .dt-button.active {
+    background-color: #28a745 !important;
+    /* Verde */
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Cuando una columna está desactivada (oculta) */
+.dt-button-collection .dt-button:not(.active) {
+    background-color: #dc3545 !important;
+    /* Rojo */
+    color: white !important;
+    font-weight: bold;
+}

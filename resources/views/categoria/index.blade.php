@@ -90,7 +90,7 @@
             buttons: [
                 {
                     extend: 'colvis',
-                    text: 'Seleccionar Columnas',
+                    // text: 'Seleccionar Columnas',
                     className: 'btn btn-primary',
                     postfixButtons: ['colvisRestore']
                 }
