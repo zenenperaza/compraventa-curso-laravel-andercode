@@ -4,61 +4,100 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Supplier;
+
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Auth;
+
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        // 🔹 Solo el ADMINISTRADOR y MANTENEDOR pueden acceder a este controlador
+        // $this->middleware(['auth', 'role:Administrador,Mantenedor']);
+    }
+
     public function index()
     {
-        //
+        $suppliers = Supplier::all();
+        return view('supplier.index', compact('suppliers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('supplier.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'ruc' => 'required|unique:suppliers|max:11',
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:suppliers,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('suppliers', 'public');
+            $data['photo'] = $photoPath;
+        }
+
+        Supplier::create($data);
+
+        return redirect()->route('suppliers.index')->with('success', 'Proveedor registrado exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        return view('supplier.edit', compact('supplier'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'ruc' => 'required|max:11|unique:suppliers,ruc,' . $id,
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:suppliers,email,' . $id,
+            'phone' => 'required|string|max:15',
+            'address' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $supplier = Supplier::findOrFail($id);
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            if ($supplier->photo) {
+                Storage::disk('public')->delete($supplier->photo);
+            }
+            $photoPath = $request->file('photo')->store('suppliers', 'public');
+            $data['photo'] = $photoPath;
+        }
+
+        $supplier->update($data);
+
+        return redirect()->route('suppliers.index')->with('success', 'Proveedor actualizado exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $supplier->delete();
+
+        return redirect()->route('suppliers.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

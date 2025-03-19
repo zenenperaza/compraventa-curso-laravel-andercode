@@ -47,12 +47,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="proveedor"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('suppliers.index') }}"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span >Proveedor</span>
                     </a>
                 </li>   
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="usuario"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('users.index') }}"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span >Usuarios</span>
                     </a>
                 </li>
