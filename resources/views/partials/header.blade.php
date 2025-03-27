@@ -6,19 +6,19 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src={{ asset("assets/images/logo-sm.png") }} alt="" height="22">
+                            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src={{ asset("assets/images/logo-dark.png") }} alt="" height="17">
+                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="17">
                         </span>
                     </a>
 
                     <a href="index.html" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src={{ asset("assets/images/logo-sm.png") }} alt="" height="22">
+                            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src={{ asset("assets/images/logo-light.png") }} alt="" height="17">
+                            <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="17">
                         </span>
                     </a>
                 </div>
@@ -86,7 +86,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src={{ asset("assets/images/users/avatar-2.jpg") }}
+                                        <img src="assets/images/users/avatar-2.jpg"
                                             class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">Angela Bernier</h6>
@@ -97,7 +97,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src={{ asset("assets/images/users/avatar-3.jpg") }}
+                                        <img src="assets/images/users/avatar-3.jpg"
                                             class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">David Grasso</h6>
@@ -108,7 +108,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src={{ asset("assets/images/users/avatar-5.jpg") }}
+                                        <img src="assets/images/users/avatar-5.jpg"
                                             class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">Mike Bunch</h6>
@@ -163,32 +163,35 @@
                         <i class='bx bx-moon fs-22'></i>
                     </button>
                 </div>
-      
+
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="{{ asset(Auth::user()->photo ?? 'assets/images/users/avatar-1.jpg') }}"
-                                alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user"
+                                src="{{ asset('storage/' . Auth::user()->photo ?? 'assets/images/users/default-avatar.jpg') }}"
+                                alt="Avatar de {{ Auth::user()->name }}">
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name }}</span>
-                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">{{ Auth::user()->role->name ?? 'Usuario' }}</span>
+                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
+                                    {{ Auth::user()->role->name ?? 'Usuario' }}
+                                </span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
                         <h6 class="dropdown-header">Bienvenido, {{ Auth::user()->name }}!</h6>
-                        <a class="dropdown-item" href="{{ '/' }}">
-                            <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> 
+                        <a class="dropdown-item" href="#">
+                            <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle">Perfil</span>
                         </a>
-                        <form method="POST" action="{{ route('logout') }}">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                            <span class="align-middle">Cerrar Sesión</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
-                            <button type="submit" class="dropdown-item">
-                                <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> 
-                                <span class="align-middle">Cerrar sesión</span>
-                            </button>
                         </form>
                     </div>
                 </div>

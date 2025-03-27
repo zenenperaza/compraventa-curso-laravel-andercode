@@ -51,6 +51,8 @@ class SupplierController extends Controller
 
         Supplier::create($data);
 
+        // dd($data);
+
         return redirect()->route('suppliers.index')->with('success', 'Proveedor registrado exitosamente.');
     }
 
