@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VentaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('compras', CompraController::class);
     Route::get('compras/pdf/{id}', [CompraController::class, 'downloadPDF'])->name('compras.pdf');
     Route::get('compras/detalle/{id}', [CompraController::class, 'detalle'])->name('compras.detalle');
+
+    Route::resource('ventas', VentaController::class);
+    Route::get('ventas/pdf/{id}', [VentaController::class, 'downloadPDF'])->name('ventas.pdf');
+    Route::get('ventas/detalle/{id}', [VentaController::class, 'detalle'])->name('ventas.detalle');
 
     
 });

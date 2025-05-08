@@ -14,28 +14,25 @@ class Venta extends Model
         'user_id',
         'tipodocumento_id',
         'total_price',
-        'sales_date',
+        'sale_date',
         'status',
         'payment_method',
+        'pdf_path',
     ];
 
-    public function customer()
-    {
+    public function customer(){
         return $this->belongsTo(Customer::class);
     }
 
-    public function user()
-    {
+    public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function tipodocumento()
-    {
+    public function tipodocumento(){
         return $this->belongsTo(TipoDocumento::class);
     }
 
-    public function detalles()
-    {
-        return $this->hasMany(DetalleVenta::class);
+    public function detalles(){
+        return $this->hasMany(DetalleVenta::class,'sale_id');
     }
 }
