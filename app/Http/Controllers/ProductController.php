@@ -44,28 +44,13 @@ class ProductController extends Controller
             'quantity' => 'required|integer|min:1',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:available,sold,archived',
-            'fechvencimiento' => 'nullable|date',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->only(['name', 'description', 'price', 'quantity', 'category_id', 'status', 'fechvencimiento']);
+        $data = $request->only(['name', 'description', 'price', 'quantity', 'category_id', 'status']);
         $data['user_id'] = auth()->id(); // Agrega el ID del usuario autenticado
 
         $product = Product::create($data);
-
-        // 1. Generar código de barras (usando el ID del producto)
-        $barcodeGenerator = new BarcodeGeneratorPNG();
-        $barcodeData = $barcodeGenerator->getBarcode($product->id, BarcodeGeneratorPNG::TYPE_CODE_128);
-        $barcodePath = "barcodes/{$product->id}.png";
-        Storage::disk('public')->put($barcodePath, $barcodeData);
-        $product->barcode = $barcodePath;
-
-        // 2. Generar código QR en formato SVG para evitar problemas con Imagick
-        $qrCodeData = "Producto: {$product->name}\nPrecio: {$product->price}\nCantidad: {$product->quantity}\nEstado: {$product->status}";
-        $qrCodeSvg = QrCode::format('svg')->size(200)->generate($qrCodeData);
-        $qrCodePath = "qrcodes/{$product->id}.svg";
-        Storage::disk('public')->put($qrCodePath, $qrCodeSvg);
-        $product->qrcode = $qrCodePath;
 
         // Guardar los datos actualizados en la base de datos
         $product->save();
@@ -106,27 +91,13 @@ class ProductController extends Controller
             'quantity' => 'required|integer|min:1',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:available,sold,archived',
-            'fechvencimiento' => 'nullable|date',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $product = Product::findOrFail($id);
-        $product->update($request->only(['name', 'description', 'price', 'quantity', 'category_id', 'status', 'fechvencimiento']));
+        $product->update($request->only(['name', 'description', 'price', 'quantity', 'category_id', 'status']));
 
-        // 1. Generar código de barras (usando el ID del producto)
-        $barcodeGenerator = new BarcodeGeneratorPNG();
-        $barcodeData = $barcodeGenerator->getBarcode($product->id, BarcodeGeneratorPNG::TYPE_CODE_128);
-        $barcodePath = "barcodes/{$product->id}.png";
-        Storage::disk('public')->put($barcodePath, $barcodeData);
-        $product->barcode = $barcodePath;
-
-        // 2. Generar código QR en formato SVG para evitar problemas con Imagick
-        $qrCodeData = "Producto: {$product->name}\nPrecio: {$product->price}\nCantidad: {$product->quantity}\nEstado: {$product->status}";
-        $qrCodeSvg = QrCode::format('svg')->size(200)->generate($qrCodeData);
-        $qrCodePath = "qrcodes/{$product->id}.svg";
-        Storage::disk('public')->put($qrCodePath, $qrCodeSvg);
-        $product->qrcode = $qrCodePath;
-
+   
         // Guardar los datos actualizados en la base de datos
         $product->save();
 

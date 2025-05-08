@@ -16,6 +16,7 @@ class Compra extends Model
         'total_cost',
         'purchase_date',
         'status',
+        'pdf_path',
     ];
 
     public function supplier()
@@ -35,6 +36,6 @@ class Compra extends Model
 
     public function detalles()
     {
-        return $this->hasMany(DetalleCompra::class);
+        return $this->hasMany(DetalleCompra::class, 'purchase_id');
     }
 }

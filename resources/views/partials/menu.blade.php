@@ -80,13 +80,13 @@
                     <li class="menu-title"><span>Compra</span></li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="">
+                        <a class="nav-link menu-link" href="{{ route('compras.index') }}">
                             <i class="ri-sword-line"></i> <span>Listado Compras</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="">
+                        <a class="nav-link menu-link" href="{{ route('compras.create') }}">
                             <i class="ri-sword-line"></i> <span>Nueva Compra</span>
                         </a>
                     </li>

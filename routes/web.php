@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
@@ -28,7 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('suppliers', SupplierController::class);
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
+    Route::delete('product-images/{id}', [ProductController::class, 'destroyImage'])->name('product_images.destroy'); 
 
+    Route::resource('compras', CompraController::class);
+    Route::get('compras/pdf/{id}', [CompraController::class, 'downloadPDF'])->name('compras.pdf');
+    Route::get('compras/detalle/{id}', [CompraController::class, 'detalle'])->name('compras.detalle');
+
+    
 });
 
 
